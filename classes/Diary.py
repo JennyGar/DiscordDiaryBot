@@ -12,7 +12,3 @@ class Diary:
 
     def __str__(self):
         return f"id: {self.id}, userid: {self.userID}, diarydate: {self.diarydate}, entrydate: {self.entrydate}, entrytype: {self.entrytype}, name: {self.entryname}, calories: {self.calories}"
-
-
-#d1 = Diary(userid=1234, diarydate=datetime.datetime.now(), entrytype = 'food', entryname='banana', calories = 120)
-#print(d1)

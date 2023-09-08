@@ -5,13 +5,21 @@ from classes.User import User
 import datetime
 import os
 import re
+import Dbservice
 
-print(datetime.date(2023,9,15))
+d1 = Diary(128342056262303744, diarydate=datetime.datetime.now(), entrytype = 'Food', entryname='Newfood', calories = 120)
+
+
+Dbservice.add_diary(d1)
+
+
+
+""" print(datetime.date(2023,9,15))
 
 mystring = '!w,cardio,200'
 ex2 = '!f,as'
 
-""" regmatchdate = '(?:!)([w|f])\s*,\s*(\w+)\s*,\s*(\d+)\s*,\s*(\d{1,2}\-\d{1,2})\s*'
+regmatchdate  = '(?:!)([w|f])\s*,\s*(\w+)\s*,\s*(\d+)\s*,\s*(\d{1,2}\-\d{1,2})\s*'
 regmatchy = '(?:!)([w|f])\s*,\s*(\w+)\s*,\s*(\d+)\s*,\s*(y)\s*'
 regmatch = '(?:!)([w|f])\s*,\s*(\w+)\s*,\s*(\d+)\s*'
 regmatchall = '(?:!)([w|f])\s*,\s*(\w+)\s*,\s*(\d+)\s*,?\s*(\d{1,2}\-\d{1,2})?\s*(y)?'
