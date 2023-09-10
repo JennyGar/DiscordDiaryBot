@@ -12,6 +12,10 @@ DB_PASS=
 Pip installs:
 dotenv
 datetime
-mysql.connector
+mysql-connector-python
 tabulate
 
+
+
+
+**If you accidentally just install mysql-connector you need to uninstall it before installing mysql-connector-python. If you've installed both you need to uninstall both before reinstalling the correct one. 
