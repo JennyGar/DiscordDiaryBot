@@ -1,3 +1,6 @@
+##THIS IS A TESTFILE TO TRY OUT INDIVIDUAL FUNCTIONS. USE IT HOWEVER YOU WANT. 
+
+
 import mysql.connector
 from dotenv import load_dotenv
 from classes.Diary import Diary
@@ -6,11 +9,58 @@ import datetime
 import os
 import re
 import Dbservice
+import time
+from tabulate import tabulate
 
-d1 = Diary(128342056262303744, diarydate=datetime.datetime.now(), entrytype = 'Food', entryname='Newfood', calories = 120)
+
+entries = Dbservice.view_day(128342056262303744,datetime.datetime.today())
+
+#print(tabulate(entries,headers=["Entry","Date","Type","Item","Calories"], tablefmt="grid"))
+
+#if len > 100 too much
+#else loop through, every x print await then clear lsit and start again
+mylist=[]
+limit = 2 
+sum = 0
+for i in range(len(entries)):
+    if (i)%limit==0 and i!=0 :
+       print(tabulate(mylist,headers=["Entry","Date","Type","Item","Calories"], tablefmt="grid")) 
+       mylist.clear()
+    mylist.append(entries[i])
+    if(entries[i][2]=='Food'):
+        sum += entries[i][4]
+    else:
+        sum -= entries[i][4] 
+if len(entries)%limit!=0:
+    print(tabulate(mylist,headers=["Entry","Date","Type","Item","Calories"], tablefmt="grid")) 
+
+print(f"total:{sum}")
+
+""" mylist.append(entries[0])
+mylist.append(entries[1])
+mylist.append(entries[2])
+mylist.append(entries[3]) """
 
 
-Dbservice.add_diary(d1)
+
+#str = (tabulate(mylist,headers=["Entry","Date","Type","Item","Calories"], tablefmt="grid"))
+#print(str)
+
+
+
+""" a = 1
+a += 2
+print(a) 
+print("location: {0:20} Revision: {0:20} a".format("location", "revision")) """
+#print(datetime.datetime.today())
+#mytime = time.mktime(datetime.datetime.today().timetuple())
+#print(int(mytime))
+
+#utctime=int(time.mktime(datetime.diarydate.date.timetuple()))
+
+#d1 = Diary(128342056262303744, diarydate=datetime.date.today(), entrytype = 'Food', entryname='Newfood', calories = 520)
+#print(d1)
+#Dbservice.add_diary(d1)
 
 
 
