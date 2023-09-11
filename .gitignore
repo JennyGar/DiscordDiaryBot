@@ -1,3 +1,8 @@
+# Personal Files
+test.session.sql
+testfile.py
+.vscode/settings.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
