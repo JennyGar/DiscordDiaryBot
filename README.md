@@ -1,4 +1,4 @@
-# pybot2
+# DiscordDiaryBot
 
 This is an informal bot I've created for my own personal use and am still expanding on. The intent of it is for me to be able to use discord as my food journal. The bot will process commands in discord and add the food entries into a database for easy processing and tracking. Currently the bot and database are being stored on an aws ec2, but if I decide to expand further and keep using the bot I will move to using an aws database.  
 Feel free to message me on discord (zaphiraf) for a link to add the bot to your server if you're interested or use the code to host the bot yourself. I do plan on adding a csv command so anybody interested can keep their own information as a backup. 
