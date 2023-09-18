@@ -3,9 +3,9 @@ import re
 import discord
 import datetime
 from datetime import timedelta
-import classes.Dbservice as Dbservice
-from classes.User import User
-from classes.Diary import Diary
+import modules.dbservice as Dbservice
+from modules.user import User
+from modules.diary import Diary
 import time
 import tabulate
 

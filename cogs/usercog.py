@@ -1,6 +1,6 @@
 import discord
-import classes.Dbservice as Dbservice
-from classes.User import User
+import modules.dbservice as Dbservice
+from modules.user import User
 import time
 import tabulate
 

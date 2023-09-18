@@ -28,7 +28,8 @@ async def setup(client):
     @client.command()
     async def help(ctx):
         await ctx.message.channel.send("""\t\t\tDate is an optional specification for all commands. Format mm-dd\n\
-It can be omitted to default to today, or 'y' can be used to indicate yesterday\n\n\
+It can be omitted to default to today, or 'y' can be used to indicate yesterday\n\
+csv is an additional option for view commands\n\n\
 __CommandList:__\n\
 Adding Food :  ``!f itemname,calories,date``\n\
 Adding a Workout:  ``!w itemname,calories,date``\n\
@@ -42,6 +43,7 @@ Adding an icecream sandwich on Sept 8th: ``!f icecream sandwich,210,09-08``\n\
 Viewing todays entries: ``!view``\n\
 Viewing entries for all of September: ``!view 09``\n\
 Viewing entries for September 9th: ``!view 09-09``\n\
+viewing all your entries in a csv file: ``!viewall csv``\n\
 Removing Entry number 8: ``!r 8``\n\n\
 __Fun stuff:__\n\
 RAT ME, rat me, jam me""")

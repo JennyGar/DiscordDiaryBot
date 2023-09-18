@@ -3,24 +3,32 @@ import re
 import discord
 import datetime
 from datetime import timedelta
-import classes.Dbservice as Dbservice
-from classes.User import User
-from classes.Diary import Diary
+import modules.dbservice as Dbservice
+from modules.user import User
+from modules.diary import Diary
 import time
 from tabulate import tabulate
+import csv
+import os
 
 from discord.ext import commands
 
 #group 1 = diary type, w(orkout)/f(ood). group 2 = name, group 3 = calories, 
 #group 4 = specified date (mm-dd), group 5 = yesterday
-#potential issue with dates being incorrect (ex 32 entered as month)
-reg_match_add = '(?:!)([w|W|f|F])\s+([\w|\s]+)\s*,\s*(-?\d+)\s*,?\s*(\d{1,2}\-\d{1,2})?\s*(y)?'
-#group 1 = all, #group2 specific date, #group3 = yesterday, #group 4 = month
-reg_match_view = "![v|V]iew(all)?\s*(\d{1,2}\-\d{1,2})?\s*(y)?(\d{1,2})?"
+#potential issue with dates being incorrect (ex 32 entered as month). Need to fix
+reg_match_add = '(?:!)([w|W|f|F]|food|workout)\s+([\w|\s]+)\s*,\s*(-?\d+)\s*,?\s*(\d{1,2}\-\d{1,2})?\s*(y)?'
+#group 1 = all, #group2 specific date, #group3 = yesterday, #group 4 = month #group 5 = csv
+reg_match_view = "![v|V]iew(all)?\s*(\d{1,2}\-\d{1,2})?\s*(y)?(\d{1,2})?\s*(csv)?"
 
+def makecsv(rows,userid):
+    filestring = f"tempfiles/temp{userid}.csv"
+    myfile = open(filestring,'w',newline='')
+    writer = csv.writer(myfile)
+    writer.writerow({'Entry','Date','Type','Item','Calories'})
+    writer.writerows(rows)
+    myfile.close()
+    return filestring
 
-#TODO: Add csv options
-#TODO: Cleanup? Maybe look at other discord bots for better organization
 #TODO: avg sum for larger time periods
 class Diarycog(commands.Cog):
     def __init__(self,bot):
@@ -34,9 +42,9 @@ class Diarycog(commands.Cog):
                 m = re.match(reg_match_add, ctx.message.content)
                 #group 1
                 item_type=None
-                if m.group(1)=='w':
+                if m.group(1) in {'w','W','workout'}:
                     item_type = "Workout"
-                if m.group(1)=='f':
+                if m.group(1) in {'f','F','food'}:
                     item_type = "Food"
                 #group 2
                 item_name = m.group(2)
@@ -64,6 +72,7 @@ class Diarycog(commands.Cog):
         try:
             if re.match(reg_match_view,ctx.message.content):
                 m = re.match(reg_match_view, ctx.message.content)
+                #Parse regex groups and use appropriate query to get diary entries. 
                 if m.group(1) is not None:
                     entries = Dbservice.view_all(ctx.message.author.id)
                 elif m.group(2) is not None:
@@ -77,8 +86,13 @@ class Diarycog(commands.Cog):
                     entries = Dbservice.view_month(userid=ctx.message.author.id, month=int(m.group(4)))
                 else: 
                     entries = Dbservice.view_day(ctx.message.author.id,datetime.datetime.today())
-                if len(entries)>99:
-                    await ctx.message.channel.send("Due to the volume I won't be posting, but will instead offer a csv. Please stay tuned for csv option to be added")
+                #Parsing for query commands done, send file or text of results. 
+                if m.group(5) is not None:
+                    entries_file = makecsv(entries,ctx.message.author.id)
+                    await ctx.message.channel.send(file=discord.File(entries_file))
+                    os.remove(entries_file)
+                elif len(entries)>99:
+                    await ctx.message.channel.send("Volume is too large, please specify csv function instead to get a file")
                 else:
                     mylist=[]
                     rowlimit = 10

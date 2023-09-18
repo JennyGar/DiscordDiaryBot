@@ -1,5 +1,5 @@
-from classes.User import User
-from classes.Diary import Diary
+from modules.user import User
+from modules.diary import Diary
 import mysql.connector
 from dotenv import load_dotenv
 import datetime
@@ -110,3 +110,4 @@ def add_user(userid: int, username:str)->int:
     return 1
   else:
     return None
+  

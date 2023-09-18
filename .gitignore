@@ -2,6 +2,7 @@
 test.session.sql
 testfile.py
 .vscode/settings.json
+tempfiles/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
