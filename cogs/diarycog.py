@@ -24,7 +24,7 @@ def makecsv(rows,userid):
     filestring = f"tempfiles/temp{userid}.csv"
     myfile = open(filestring,'w',newline='')
     writer = csv.writer(myfile)
-    writer.writerow({'Entry','Date','Type','Item','Calories'})
+    writer.writerow(['Entry','Date','Type','Item','Calories'])
     writer.writerows(rows)
     myfile.close()
     return filestring
