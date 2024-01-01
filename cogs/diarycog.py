@@ -56,7 +56,7 @@ class Diarycog(commands.Cog):
                     placeholder_date = datetime.date.today()-timedelta(days =1)
                 if m.group(4) is not None:
                     split = m.group(4).split("-")
-                    placeholder_date = datetime.date(2023, int(split[0]), int(split[1]))
+                    placeholder_date = datetime.date(2024, int(split[0]), int(split[1]))
                 diary_entry = Diary(ctx.message.author.id,placeholder_date,item_name,item_type,calories)
                 Dbservice.add_diary(diary_entry)
                 utctime=int(time.mktime(diary_entry.diarydate.timetuple()))
@@ -77,7 +77,7 @@ class Diarycog(commands.Cog):
                     entries = Dbservice.view_all(ctx.message.author.id)
                 elif m.group(2) is not None:
                     split = m.group(2).split("-")
-                    placeholder_date = datetime.datetime(2023, int(split[0]), int(split[1]))
+                    placeholder_date = datetime.datetime(2024, int(split[0]), int(split[1]))
                     entries = Dbservice.view_day(ctx.message.author.id,day=placeholder_date)
                 elif m.group(3) is not None:
                     yesterday = datetime.datetime.today()-timedelta(days =1)
